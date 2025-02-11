@@ -1,4 +1,4 @@
-# Java平台标准版HotSpot虚拟机垃圾回收调优指南，第8版
+# Java平台标准版HotSpot虚拟机垃圾回收调优指南，第8版【中文翻译】
 
 # 目录
 
@@ -95,3 +95,7 @@
 * [显式垃圾回收](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref64)
 * [软引用](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref65)
 * [类元数据](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref66)
+
+---
+# 相关链接
+英文版文档链接: [Java Platform, Standard Edition HotSpot Virtual Machine Garbage Collection Tuning Guide](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
