@@ -1,14 +1,10 @@
-# 7 主要的并发收集器
+# 7 主要并发收集器
 
-Java HotSpot 虚拟机在 JDK 8 中有两个主要的并发收集器：
+Java HotSpot 虚拟机在 JDK 8 中有两个主要并发收集器：
 
-- 
+- 并发标记清除（CMS）收集器：此收集器适用于那些希望垃圾回收暂停时间更短，并且能够承受与垃圾回收共享处理器资源的应用程序。
 
-- 
-
-  并发标记清除（CMS）收集器：此收集器适用于那些希望垃圾回收暂停时间更短，并且能够承受与垃圾回收共享处理器资源的应用程序。
-
-- Garbage-First 垃圾收集器：这种服务器风格的收集器适用于具有大内存的多处理器机器。它能以高概率满足垃圾收集暂停时间目标，同时实现高吞吐量。
+- Garbage-First （G1）垃圾收集器：这种服务器风格的收集器适用于具有大内存的多处理器机器。它能以高概率满足垃圾收集暂停时间目标，同时实现高吞吐量。
 
 ## 并发开销
 
@@ -21,11 +17,12 @@ Java HotSpot 虚拟机在 JDK 8 中有两个主要的并发收集器：
 ## 额外参考资料
 
 G1 垃圾回收器： 注：“Garbage-First Garbage Collector” 一般简称为 “G1 垃圾回收器”，这是技术领域的特定术语
-
-\```http://www.oracle.com/technetwork/java/javase/tech/g1-intro-jsp-135488.html`
+```
+http://www.oracle.com/technetwork/java/javase/tech/g1-intro-jsp-135488.html todo 翻译此链接
+```
 
 G1 垃圾收集器调优：
 
 ```
-http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html
+http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html todo 翻译此链接
 ```
