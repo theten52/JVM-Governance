@@ -66,7 +66,7 @@ G1 具有并发标记阶段，该阶段会标记从应用程序中找到的存�
 
 ## 启动并发收集周期
 
-如前所述，在混合式垃圾回收中，年轻代区域和老年代区域都会被回收。为了回收老年代区域，G1 会对堆中的存活对象进行完整标记。这种标记是通过并发标记阶段完成的。当整个 Java 堆的占用率达到参数 `InitiatingHeapOccupancyPercent` 的值时，就会启动并发标记阶段。可以使用命令行选项 `-XX:InitiatingHeapOccupancyPercent=` `<NN>` 来设置该参数的值。 `InitiatingHeapOccupancyPercent` 的默认值是 45。
+如前所述，在混合式垃圾回收中，年轻代区域和老年代区域都会被回收。为了回收老年代区域，G1 会对堆中的存活对象进行完整标记。这种标记是通过并发标记阶段完成的。当整个 Java 堆的占用率达到参数 `InitiatingHeapOccupancyPercent` 的值时，就会启动并发标记阶段。可以使用命令行选项 `-XX:InitiatingHeapOccupancyPercent=<NN>` 来设置该参数的值。 `InitiatingHeapOccupancyPercent` 的默认值是 45。
 
 
 

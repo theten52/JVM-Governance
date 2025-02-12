@@ -50,7 +50,7 @@ CMS 收集器和 Java HotSpot 虚拟机中的所有其他收集器一样，是�
 
 根据近期情况，CMS 收集器会维护关于老年代即将耗尽前剩余时间以及一次并发收集周期所需时间的估算值。利用这些动态估算值，会启动一次并发收集周期，目的是在老年代耗尽之前完成收集周期。为了安全起见，这些估算值会有一定的余量，因为并发模式失败的代价可能非常高。
 
-如果老年代的占用率超过了初始占用率（老年代的一个百分比），并发收集也会启动。此初始占用率阈值的默认值约为 92%，但该值可能会因版本而异。可以使用命令行选项 `-XX:CMSInitiatingOccupancyFraction=` `<N>` 手动调整此值，其中 `<N>` 是老年代大小的一个整数百分比（0 到 100）。
+如果老年代的占用率超过了初始占用率（老年代的一个百分比），并发收集也会启动。此初始占用率阈值的默认值约为 92%，但该值可能会因版本而异。可以使用命令行选项 `-XX:CMSInitiatingOccupancyFraction=<N>` 手动调整此值，其中 `<N>` 是老年代大小的一个整数百分比（0 到 100）。
 
 
 
@@ -95,11 +95,11 @@ i-cms 模式使用占空比来控制 CMS 收集器在自愿放弃处理器之前
 | -------------------------------------- | ------------------------------------------------------------ | ---------------------------- | ---------------------------- |
 | `-XX:+CMSIncrementalMode`              | 启用增量模式。请注意，要使此选项生效，还必须启用 CMS 收集器（使用 `-XX:+UseConcMarkSweepGC` ）。 | 禁用的；不可用的；有残疾的   | 禁用的；不可用的；有残疾的   |
 | `-XX:+CMSIncrementalPacing`            | 启用自动调速功能。增量模式占空比会根据 JVM 运行时收集的统计信息自动调整。 | 禁用的；失效的；有残疾的     | 禁用的；不可用的；有残疾的   |
-| `-XX:CMSIncrementalDutyCycle=``<N>`    | CMS 收集器在次要收集之间允许运行的时间百分比（0 到 100）。如果启用了 `CMSIncrementalPacing` ，则这只是初始值。 | 50                           | 10                           |
-| `-XX:CMSIncrementalDutyCycleMin=``<N>` | 当 `CMSIncrementalPacing` 启用时，占空比下限的百分比（0 到 100）。 | 10                           | 0                            |
-| `-XX:CMSIncrementalSafetyFactor=``<N>` | 计算占空比时用于增加保守性的百分比（0 到 100）               | 10                           | 10                           |
-| `-XX:CMSIncrementalOffset=``<N>`       | 在小回收间隔期间，增量模式占空比向右偏移的百分比（0 到 100）。 | 0                            | 0                            |
-| `-XX:CMSExpAvgFactor=``<N>`            | 在为 CMS 收集统计信息计算指数平均值时，用于对当前样本进行加权的百分比（0 到 100）。 | 25                           | 25                           |
+| `-XX:CMSIncrementalDutyCycle=<N>`    | CMS 收集器在次要收集之间允许运行的时间百分比（0 到 100）。如果启用了 `CMSIncrementalPacing` ，则这只是初始值。 | 50                           | 10                           |
+| `-XX:CMSIncrementalDutyCycleMin=<N>` | 当 `CMSIncrementalPacing` 启用时，占空比下限的百分比（0 到 100）。 | 10                           | 0                            |
+| `-XX:CMSIncrementalSafetyFactor=<N>` | 计算占空比时用于增加保守性的百分比（0 到 100）               | 10                           | 10                           |
+| `-XX:CMSIncrementalOffset=<N>`       | 在小回收间隔期间，增量模式占空比向右偏移的百分比（0 到 100）。 | 0                            | 0                            |
+| `-XX:CMSExpAvgFactor=<N>`            | 在为 CMS 收集统计信息计算指数平均值时，用于对当前样本进行加权的百分比（0 到 100）。 | 25                           | 25                           |
 
 
 
@@ -109,21 +109,21 @@ i-cms 模式使用占空比来控制 CMS 收集器在自愿放弃处理器之前
 
 要在 Java SE 8 中使用 i-cms，请使用以下命令行选项：
 
-```
+`
 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode \
 -XX:+PrintGCDetails -XX:+PrintGCTimeStamps
-```
+`
 
 前两个选项分别启用 CMS 收集器和 i-cms。最后两个选项不是必需的；它们只是将有关垃圾回收的诊断信息写入标准输出，以便可以查看并在以后分析垃圾回收行为。
 
 对于 Java SE 5 及更早版本，Oracle 建议将以下内容作为 i-cms 的初始命令行选项集：
 
-```
+`
 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode \
 -XX:+PrintGCDetails -XX:+PrintGCTimeStamps \
 -XX:+CMSIncrementalPacing -XX:CMSIncrementalDutyCycleMin=0
 -XX:CMSIncrementalDutyCycle=10
-```
+`
 
 虽然控制 i - cms 自动节奏的三个选项的值在 JavaSE6 中已成为默认值，但对于 JavaSE8 也建议使用相同的值。
 
@@ -139,9 +139,9 @@ i-cms 自动调步功能会利用程序运行期间收集的统计信息来计�
 
 | 步骤                                  | 选项                                                         |
 | ------------------------------------- | ------------------------------------------------------------ |
-| 1. 提高安全系数。                     | `-XX:CMSIncrementalSafetyFactor=``<N>`                       |
-| 2. 增加最小占空比。                   | `-XX:CMSIncrementalDutyCycleMin=``<N>`                       |
-| 3. 禁用自动调速功能，使用固定占空比。 | `-XX:-CMSIncrementalPacing -XX:CMSIncrementalDutyCycle=``<N>` |
+| 1. 提高安全系数。                     | `-XX:CMSIncrementalSafetyFactor=<N>`                       |
+| 2. 增加最小占空比。                   | `-XX:CMSIncrementalDutyCycleMin=<N>`                       |
+| 3. 禁用自动调速功能，使用固定占空比。 | `-XX:-CMSIncrementalPacing -XX:CMSIncrementalDutyCycle=<N>` |
 
 
 
@@ -157,7 +157,7 @@ i-cms 自动调步功能会利用程序运行期间收集的统计信息来计�
 
 示例 8 - 1：内容管理系统（CMS）收集器的输出
 
-```
+`
 [GC [1 CMS-initial-mark: 13991K(20288K)] 14103K(22400K), 0.0023781 secs]
 [GC [DefNew: 2112K->64K(2112K), 0.0837052 secs] 16103K->15476K(22400K), 0.0838519 secs]
 ...
@@ -175,7 +175,7 @@ i-cms 自动调步功能会利用程序运行期间收集的统计信息来计�
 [CMS-concurrent-reset: 0.016/0.016 secs]
 [GC [DefNew: 2048K->1K(2112K), 0.0013936 secs] 17527K->15479K(27912K), 0.0014814 secs
 ]
-```
+`
 
 
 
