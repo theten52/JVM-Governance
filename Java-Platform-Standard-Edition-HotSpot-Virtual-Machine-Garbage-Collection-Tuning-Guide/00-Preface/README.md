@@ -23,16 +23,16 @@
 有关更多信息，请参阅以下文档：
 
 - Java 虚拟机技术
-  http://docs.oracle.com/javase/8/docs/technotes/guides/vm/index.html`
+  `http://docs.oracle.com/javase/8/docs/technotes/guides/vm/index.html` TODO 翻译
   
 - Java SE HotSpot 概览
-  `http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html`
+  `http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html` TODO 翻译
 
 - HotSpot 虚拟机常见问题解答（FAQ）
 
-  `http://www.oracle.com/technetwork/java/hotspotfaq-138619.html`
+  `http://www.oracle.com/technetwork/java/hotspotfaq-138619.html` TODO 整理
 
-- 理查德·琼斯（Richard Jones）和拉斐尔·林斯（Rafael Lins），《垃圾回收：自动动态内存管理算法》（Garbage Collection: Algorithms for Automated Dynamic Memory Management），威利父子出版公司（Wiley and Sons）（1996 年），ISBN 0-471-94148-4
+- 理查德·琼斯（Richard Jones）和拉斐尔·林斯（Rafael Lins），《垃圾回收算法手册：自动内存管理的艺术》（Garbage Collection Algorithms For Automatic Dynamic Memory Management）（原文错误，此处已更新）（TODO 整理），威利父子出版公司（Wiley and Sons）（1996 年），ISBN 0-471-94148-4
 
 ## 约定
 
