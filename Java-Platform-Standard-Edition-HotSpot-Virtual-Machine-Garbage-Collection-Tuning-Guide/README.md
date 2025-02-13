@@ -73,7 +73,7 @@
 * [分配（疏散）失败](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#allocation_evacuation_failure)
 * [浮动垃圾](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#sthref47)
 * [暂停](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#pauses)
-* [卡表（Card Tables）和并发阶段](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#sthref48)
+* [卡表（Card Tables）（Card Tables）和并发阶段](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#sthref48)
 * [启动并发收集周期](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#sthref49)
 * [暂停时间目标](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#pause_time_goal)
 
