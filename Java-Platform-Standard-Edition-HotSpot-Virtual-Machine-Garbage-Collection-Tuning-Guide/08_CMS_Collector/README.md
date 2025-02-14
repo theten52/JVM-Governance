@@ -85,21 +85,21 @@ i-cms 模式使用占空比来控制 CMS 收集器在自愿放弃处理器之前
 
 要在 Java SE 8 中使用 i-cms，请使用以下命令行选项：
 
-`
+```
 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode \
 -XX:+PrintGCDetails -XX:+PrintGCTimeStamps
-`
+```
 
 前两个选项分别启用 CMS 收集器和 i-cms。最后两个选项不是必需的；它们只是将有关垃圾回收的诊断信息写入标准输出，以便可以查看并在以后分析垃圾回收行为。
 
 对于 Java SE 5 及更早版本，Oracle 建议将以下内容作为 i-cms 的初始命令行选项集：
 
-`
+```
 -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode \
 -XX:+PrintGCDetails -XX:+PrintGCTimeStamps \
 -XX:+CMSIncrementalPacing -XX:CMSIncrementalDutyCycleMin=0
 -XX:CMSIncrementalDutyCycle=10
-`
+```
 
 虽然控制 i - cms 自动节奏的三个选项的值在 JavaSE6 中已成为默认值，但对于 JavaSE8 也建议使用相同的值。
 
@@ -121,25 +121,35 @@ i-cms 自动调节功能会利用程序运行期间收集的统计信息来计�
 
 示例 8 - 1：CMS收集器的输出
 
----
+```
 
-**[GC [1 CMS-initial-mark: 13991K(20288K)] 14103K(22400K), 0.0023781 secs] //1**
-*[GC [DefNew: 2112K->64K(2112K), 0.0837052 secs] 16103K->15476K(22400K), 0.0838519 secs]*
-*...*
-*[GC [DefNew: 2077K->63K(2112K), 0.0126205 secs] 17552K->15855K(22400K), 0.0127482 secs]*
-**[CMS-concurrent-mark: 0.267/0.374 secs] //2**
-*[GC [DefNew: 2111K->64K(2112K), 0.0190851 secs] 17903K->16154K(22400K), 0.0191903 secs]*
-**[CMS-concurrent-preclean: 0.044/0.064 secs] //3**
-**[GC [1 CMS-remark: 16090K(20288K)] 17242K(22400K), 0.0210460 secs] //4**
-*[GC [DefNew: 2112K->63K(2112K), 0.0716116 secs] 18177K->17382K(22400K), 0.0718204 secs]*
-*[GC [DefNew: 2111K->63K(2112K), 0.0830392 secs] 19363K->18757K(22400K), 0.0832943 secs]*
-*...*
-*[GC [DefNew: 2111K->0K(2112K), 0.0035190 secs] 17527K->15479K(22400K), 0.0036052 secs]*
-**[CMS-concurrent-sweep: 0.291/0.662 secs] //5**
-*[GC [DefNew: 2048K->0K(2112K), 0.0013347 secs] 17527K->15479K(27912K), 0.0014231 secs]*
-**[CMS-concurrent-reset: 0.016/0.016 secs] //6**
-*[GC [DefNew: 2048K->1K(2112K), 0.0013936 secs] 17527K->15479K(27912K), 0.0014814 secs]*
+[GC [1 CMS-initial-mark: 13991K(20288K)] 14103K(22400K), 0.0023781 secs] //1
 
----
+[GC [DefNew: 2112K->64K(2112K), 0.0837052 secs] 16103K->15476K(22400K), 0.0838519 secs]
+...
+[GC [DefNew: 2077K->63K(2112K), 0.0126205 secs] 17552K->15855K(22400K), 0.0127482 secs]
+
+[CMS-concurrent-mark: 0.267/0.374 secs] //2
+
+[GC [DefNew: 2111K->64K(2112K), 0.0190851 secs] 17903K->16154K(22400K), 0.0191903 secs]
+
+[CMS-concurrent-preclean: 0.044/0.064 secs] //3
+
+[GC [1 CMS-remark: 16090K(20288K)] 17242K(22400K), 0.0210460 secs] //4
+
+[GC [DefNew: 2112K->63K(2112K), 0.0716116 secs] 18177K->17382K(22400K), 0.0718204 secs]
+[GC [DefNew: 2111K->63K(2112K), 0.0830392 secs] 19363K->18757K(22400K), 0.0832943 secs]
+...
+[GC [DefNew: 2111K->0K(2112K), 0.0035190 secs] 17527K->15479K(22400K), 0.0036052 secs]
+
+[CMS-concurrent-sweep: 0.291/0.662 secs] //5
+
+[GC [DefNew: 2048K->0K(2112K), 0.0013347 secs] 17527K->15479K(27912K), 0.0014231 secs]
+
+[CMS-concurrent-reset: 0.016/0.016 secs] //6
+
+[GC [DefNew: 2048K->1K(2112K), 0.0013936 secs] 17527K->15479K(27912K), 0.0014814 secs]
+
+```
 
 初始标记暂停相对于Minor GC暂停时间通常较短。并发阶段（并发标记、并发预清理和并发清除）通常比Minor GC暂停持续的时间长得多，如示例 8 - 1“CMS 收集器的输出”所示。不过要注意，在这些并发阶段应用程序不会暂停。重标记暂停的时长通常与Minor GC暂停相当。重标记暂停会受到某些应用程序特性（例如，较高的对象修改率可能会增加此暂停时间）以及自上次Minor GC以来的时间（例如，新生代中有更多对象可能会增加此暂停时间）的影响。
