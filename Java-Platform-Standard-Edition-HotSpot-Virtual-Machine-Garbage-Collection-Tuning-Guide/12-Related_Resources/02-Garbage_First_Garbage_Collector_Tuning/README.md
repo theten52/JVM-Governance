@@ -59,25 +59,21 @@ G1 垃圾回收器（G1 GC）是一种自适应的垃圾回收器，其默认设
   ```
 
   设置 G1 区域的大小。该值必须是 2 的幂，范围从 1MB 到 32MB。目标是根据最小 Java 堆大小设置大约 2048 个区域。
-
 - ```
   -XX:MaxGCPauseMillis=200
   ```
 
   设置期望的最大暂停时间的目标值。默认值为 200 毫秒。指定的值不会根据你的堆大小进行调整。
-
 - ```
   -XX:G1NewSizePercent=5
   ```
 
   设置用于新生代大小的堆百分比下限。默认值为 Java 堆的 5%。这是一个实验性标志。有关示例，请参阅“如何解锁实验性虚拟机标志”。此设置将取代 `-XX:DefaultMinNewGenPercent` 设置。Java HotSpot 虚拟机（版本 23）不支持此设置。
-
 - ```
   -XX:G1MaxNewSizePercent=60
   ```
 
   设置用于新生代大小的堆大小的百分比上限。默认值为 Java 堆大小的 60%。这是一个实验性标志。有关示例，请参阅“如何解锁实验性虚拟机标志”。此设置将取代 `-XX:DefaultMaxNewGenPercent` 设置。Java HotSpot 虚拟机（版本 23）不支持此设置。
-
 - ```
   -XX:ParallelGCThreads=n
   ```
@@ -85,50 +81,41 @@ G1 垃圾回收器（G1 GC）是一种自适应的垃圾回收器，其默认设
   设置 STW 工作线程的值。将 n 的值设置为逻辑处理器的数量。 `n` 的值在不超过 8 时与逻辑处理器的数量相同。
 
   如果逻辑处理器数量超过八个，则将 `n` 的值设置为约为逻辑处理器数量的 5/8。这在大多数情况下都适用，但对于较大的 SPARC 系统除外，在这些系统中， `n` 的值可以约为逻辑处理器数量的 5/16。
-
 - ```
   -XX:ConcGCThreads=n
   ```
 
   设置并行标记线程的数量。将 `n` 设置为并行垃圾回收线程数量（ `ParallelGCThreads` ）的大约四分之一。
-
 - ```
   -XX:InitiatingHeapOccupancyPercent=45
   ```
 
   设置触发标记周期的 Java 堆占用阈值。默认占用率为整个 Java 堆的 45%。
-
 - ```
   -XX:G1MixedGCLiveThresholdPercent=65
   ```
 
   设置旧区域要被纳入混合垃圾回收周期的占用阈值。默认占用率为 65%。这是一个实验性标志。有关示例，请参阅“如何解锁实验性虚拟机标志”。此设置将取代 `-XX:G1OldCSetRegionLiveThresholdPercent` 设置。Java HotSpot 虚拟机（版本 23）不支持此设置。
-
 - ```
   -XX:G1HeapWastePercent=10
   ```
 
   设置您愿意浪费的堆内存百分比。当可回收百分比小于堆内存浪费百分比时，Java HotSpot 虚拟机不会启动混合垃圾回收周期。默认值为 10%。此设置在 Java HotSpot 虚拟机（版本 23）中不可用。
-
 - ```
   -XX:G1MixedGCCountTarget=8
   ```
 
   将标记周期后混合垃圾回收的目标次数设置为收集存活数据最多为 `G1MixedGCLIveThresholdPercent` 的老年代区域。默认值是 8 次混合垃圾回收。混合回收的目标是在这个目标次数内完成。此设置在 Java HotSpot VM 构建版本 23 中不可用。
-
 - ```
   -XX:G1OldCSetRegionThresholdPercent=10
   ```
 
   设置在混合垃圾回收周期中要回收的旧区域数量上限。默认值为 Java 堆的 10%。此设置在 Java HotSpot VM 构建版本 23 中不可用。
-
 - ```
   -XX:G1ReservePercent=10
   ```
 
   设置保留的空闲内存百分比，以降低 to-space 溢出的风险。默认值为 10%。当您增加或减少该百分比时，请确保将 Java 堆总量调整相同的幅度。此设置在 Java HotSpot VM 构建版本 23 中不可用。
-
-
 
 #### 如何解锁实验性虚拟机标志
 
@@ -143,19 +130,17 @@ G1 垃圾回收器（G1 GC）是一种自适应的垃圾回收器，其默认设
 在评估和微调 G1 垃圾回收器（G1 GC）时，请牢记以下建议：
 
 - 新生代大小：避免使用 `-Xmn` 选项或任何其他相关选项（如 `-XX:NewRatio` ）显式设置新生代大小。固定新生代大小会覆盖目标暂停时间目标。
-
 - 暂停时间目标：当你评估或调优任何垃圾回收时，始终存在延迟与吞吐量的权衡。G1 GC 是一种具有均匀暂停的增量式垃圾回收器，但会给应用程序线程带来更多开销。G1 GC 的吞吐量目标是 90% 的应用程序运行时间和 10% 的垃圾回收时间。与 Java HotSpot VM 的吞吐量收集器相比，后者的目标是 99% 的应用程序运行时间和 1% 的垃圾回收时间。因此，当你评估 G1 GC 的吞吐量时，应放宽暂停时间目标。设定过于激进的目标意味着你愿意承受垃圾回收开销的增加，这会直接影响吞吐量。当你评估 G1 GC 的延迟时，你可以设定所需的（软）实时目标，G1 GC 会尽力实现该目标。不过，这可能会导致吞吐量下降。
-
 - 
 
   驯服混合垃圾回收：在调优混合垃圾回收时，尝试以下选项。有关这些选项的信息，请参阅“重要默认设置”。
 
-  - `-XX:InitiatingHeapOccupancyPercent`
-    用于更改标记阈值。
-  - `-XX:G1MixedGCLiveThresholdPercent` 和 `-XX:G1HeapWastePercent`
-    当你想改变混合垃圾回收决策时。
-  - `-XX:G1MixedGCCountTarget` 和 `-XX:G1OldCSetRegionThresholdPercent`
-    当你想为旧区域调整 CSet 时。
+- `-XX:InitiatingHeapOccupancyPercent`
+  用于更改标记阈值。
+- `-XX:G1MixedGCLiveThresholdPercent` 和 `-XX:G1HeapWastePercent`
+  当你想改变混合垃圾回收决策时。
+- `-XX:G1MixedGCCountTarget` 和 `-XX:G1OldCSetRegionThresholdPercent`
+  当你想为旧区域调整 CSet 时。
 
 #### 溢出和耗尽日志消息
 
@@ -218,10 +203,10 @@ G1 垃圾回收器（G1 GC）是一种区域化、并行 - 并发、增量式的
 
 以下文档提供了有关 Java HotSpot 虚拟机中垃圾回收及相关问题的信息。
 
-| 文档                                                         | 描述                                                         |
-| :----------------------------------------------------------- | :----------------------------------------------------------- |
-| [内存管理白皮书 [pdf\]](https://www.oracle.com/technetwork/java/javase/tech/memorymanagement-whitepaper-1-150020.pdf) TODO | 包括垃圾回收（GC）概念概述、可用收集器的描述以及一些基本的调优技巧（更多调优细节见下面的调优指南）。 |
-|                                                              | 描述了默认运行时编译器、垃圾回收器和堆大小是如何选择的。（请注意，本文档是为 J2SE 5.0 版本编写的；不过，这些信息同样适用于 Java SE 6。） |
-| [垃圾回收调优](https://www.oracle.com/java/technologies/javase/gc-tuning-6.html) TODO | 提供有关可用垃圾回收器的详细信息、在默认垃圾回收器不满足需求时选择回收器的指南，以及通过调整堆和垃圾回收参数来提高性能的建议。 |
-| [如何处理 Java 终结机制的内存保留问题](http://www.devx.com/Java/Article/30192) TODO | 描述了 Java 中终结机制的一些陷阱，并介绍了避免这些陷阱的技术。 |
-| [垃圾优先（“G1”）垃圾回收器](https://www.oracle.com/java/technologies/javase/hotspot-garbage-collection.html) [DONE] | 介绍了 Java HotSpot 虚拟机中全新的 G1 垃圾回收器。           |
+| 文档                                                                                                                                | 描述                                                                                                                                     |
+| :---------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
+| [内存管理白皮书[pdf\]](https://www.oracle.com/technetwork/java/javase/tech/memorymanagement-whitepaper-1-150020.pdf) [已翻译，在12-03] | 包括垃圾回收（GC）概念概述、可用收集器的描述以及一些基本的调优技巧（更多调优细节见下面的调优指南）。                                     |
+|                                                                                                                                     | 描述了默认运行时编译器、垃圾回收器和堆大小是如何选择的。（请注意，本文档是为 J2SE 5.0 版本编写的；不过，这些信息同样适用于 Java SE 6。） |
+| [垃圾回收调优](https://www.oracle.com/java/technologies/javase/gc-tuning-6.html) 【忽略，Java6的版本，已翻译Java8的版本】              | 提供有关可用垃圾回收器的详细信息、在默认垃圾回收器不满足需求时选择回收器的指南，以及通过调整堆和垃圾回收参数来提高性能的建议。           |
+| [如何处理 Java 终结机制的内存保留问题](http://www.devx.com/Java/Article/30192) 【已翻译，在12-05】                                     | 描述了 Java 中终结机制的一些陷阱，并介绍了避免这些陷阱的技术。                                                                           |
+| [垃圾优先（“G1”）垃圾回收器](https://www.oracle.com/java/technologies/javase/hotspot-garbage-collection.html) [DONE]                 | 介绍了 Java HotSpot 虚拟机中全新的 G1 垃圾回收器。                                                                                       |

@@ -2,6 +2,8 @@
 
 [原文链接](https://www.oracle.com/technetwork/java/javase/tech/memorymanagement-whitepaper-1-150020.pdf)
 
+[另一个版本](https://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf)
+
 Sun Microsystems公司 2006 年 4 月
 
 # 目录
@@ -13,57 +15,57 @@ Sun Microsystems公司 2006 年 4 月
 3 垃圾回收概念
 
     理想的垃圾回收器特性
-
+    
     设计选择
-
+    
     性能指标
-
+    
     分代收集
 
 4 J2SE 5.0 HotSpot JVM 中的垃圾回收器
 
     HotSpot 分代
-
+    
     垃圾回收类型
-
+    
     快速分配
-
+    
     串行收集器
-
+    
     并行收集器
-
+    
     并行压缩收集器
-
+    
     并发标记清除（CMS）收集器
 
 5 自适应优化——自动选择与行为调整
 
     收集器、堆大小和虚拟机的自动选择
-
+    
     基于行为的并行收集器调优
 
 6 推荐
 
     何时选择不同的垃圾回收器
-
+    
     堆大小调整
-
+    
     并行收集器的调优策略
-
+    
     如何处理 OutOfMemoryError 错误
 
 7 评估垃圾回收性能的工具
 
     –XX:+PrintGCDetails 命令行选项
-
+    
     –XX:+PrintGCTimeStamps 命令行选项
-
+    
     jmap
-
+    
     jstat
-
+    
     HPROF：堆分析器
-
+    
     HAT：堆分析工具
 
 8 与垃圾回收相关的关键选项
